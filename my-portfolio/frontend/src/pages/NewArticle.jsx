@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "../lib/api.js";
-import { useAuth } from "../context/AuthContext.jsx"; // ← Ajoutez cette ligne
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function NewArticle() {
   const [title, setTitle] = useState("");

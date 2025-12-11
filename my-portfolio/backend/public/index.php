@@ -2,7 +2,7 @@
 // Point d'entrée unique - index.php
 require_once __DIR__ . '/../config/config.php';
 
-// Debug
+
 error_log("=== NEW REQUEST ===");
 error_log("Request Method: " . $_SERVER['REQUEST_METHOD']);
 error_log("Request URI: " . $_SERVER['REQUEST_URI']);
@@ -27,7 +27,7 @@ error_log("Clean path: " . $path);
 
 // Router les requêtes API
 if (strpos($path, 'api/') === 0) {
-    $api_endpoint = substr($path, 4); // Enlève "api/"
+    $api_endpoint = substr($path, 4); 
     
     error_log("API Endpoint: " . $api_endpoint);
     
@@ -41,7 +41,6 @@ if (strpos($path, 'api/') === 0) {
         'upload_avatar' => 'upload_avatar.php',
     ];
     
-    // Vérifier si la route existe
     if (isset($routes[$api_endpoint])) {
         $api_file = __DIR__ . '/api/' . $routes[$api_endpoint];
         error_log("Including API file: " . $api_file);
@@ -53,14 +52,13 @@ if (strpos($path, 'api/') === 0) {
             json(['error' => 'API file not found'], 500);
         }
     } else {
-        // Route non trouvée
         error_log("Endpoint not found: " . $api_endpoint);
         json(['error' => 'Endpoint not found'], 404);
     }
 } else {
-    // Pour les autres requêtes
+
     if ($path === '' || $path === 'test.php') {
-        // Servir le fichier test.php ou la racine
+
         if ($path === 'test.php') {
             require_once __DIR__ . '/test.php';
         } else {
@@ -78,7 +76,6 @@ if (strpos($path, 'api/') === 0) {
             ]);
         }
     } else {
-        // Fichier non trouvé
         json(['error' => 'Not found'], 404);
     }
 }

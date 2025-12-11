@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
 
-// Debug complet
+
 error_log("=== API.PHP CALLED ===");
 error_log("REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD']);
 error_log("REQUEST_URI: " . $_SERVER['REQUEST_URI']);
@@ -22,14 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Méthode robuste pour extraire l'endpoint
+
 $request_uri = $_SERVER['REQUEST_URI'];
 $script_name = $_SERVER['SCRIPT_NAME'];
 
-// Enlever les paramètres de query
+
 $request_uri = strtok($request_uri, '?');
 
-// Si nous sommes dans api.php, chercher ce qui vient après
+
 if (strpos($request_uri, $script_name) === 0) {
     $endpoint = substr($request_uri, strlen($script_name));
 } else {
@@ -38,12 +38,12 @@ if (strpos($request_uri, $script_name) === 0) {
     $endpoint = str_replace('/api.php', '', $path);
 }
 
-// Nettoyer l'endpoint
+
 $endpoint = trim($endpoint, '/');
 
 error_log("Extracted endpoint: '" . $endpoint . "'");
 
-// Si l'endpoint est vide, c'est qu'on a appelé /api.php directement
+
 if ($endpoint === '') {
     json([
         'message' => 'API is running', 
@@ -52,7 +52,7 @@ if ($endpoint === '') {
     ]);
 }
 
-// Router vers le bon fichier
+
 switch($endpoint) {
     case 'register':
         require_once __DIR__ . '/api/register.php';
